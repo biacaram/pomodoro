@@ -41,7 +41,23 @@ const toggleClock = (reset) => {
       clockTimer = setInterval(() => {
       // decrease time left / increase time spent
       currentTimeLeftInSession--;
+      displayCurrentTimeLeftInSession();
       }, 1000)
     }
   }
+}
+
+const displayCurrentTimeLeftInSession = () => {
+  const secondsLeft = currentTimeLeftInSession;
+  let result = '';
+  const seconds = secondsLeft % 60;
+  const minutes = parseInt(secondsLeft / 60) % 60;
+  let hours = parseInt(secondsLeft / 3600);
+  // add leading zeroes if it's less than 10
+  function addLeadingZeroes(time) {
+    return time < 10 ? `0${time}` : time
+  }
+  if (hours > 0) result += `${hours}:`
+  result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`
+  pomodoroTimer.innerText = result.toString();
 }
