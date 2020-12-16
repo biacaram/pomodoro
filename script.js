@@ -161,3 +161,11 @@ const setUpdatedTimers = () => {
     breakSessionDuration = currentTimeLeftInSession
   }
 }
+
+const progressBar = new ProgressBar.Circle('#pomodoro-timer', {
+  strokeWidth: 2,
+  text: {
+    value: '25:00',
+  },
+  trailColor: '#f4f4f4',
+})
