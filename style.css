@@ -63,6 +63,11 @@
   height: 40px;
   width: 40px;
   border-radius: 50%;
+  background-color: #c31f1f;
+}
+
+#pomodoro-clock-actions .fas {
+  color: whitesmoke;
 }
 
 .hidden {
@@ -75,10 +80,20 @@
   flex-direction: column;
   width: 100px;
   margin-right: 10px;
+  font-family: fantasy;
 }
 
 .pomodoro-input input {
   border: 1px solid lightgrey;
   border-radius: 3px;
   padding: 5px;
+  margin-top: 10px;
+}
+
+#pomodoro-info h3 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
