@@ -2,8 +2,14 @@ const pomodoroTimer = document.querySelector('#pomodoro-timer');
 const startButton = document.getElementById('pomodoro-start');
 const pauseButton = document.getElementById('pomodoro-pause');
 const stopButton = document.getElementById('pomodoro-stop');
+let isClockRunning = false;
+let workSessionDuration = 1500; // in seconds = 25 mins
+let currentTimeLeftInSession = 1500;
+let breakSessionDuration = 300; // in seconds = 5 mins;
 let type = 'Work';
 let timeSpentInCurrentSession = 0;
+let currentTaskLabel = document.querySelector('#pomodoro-clock-task')
+
 
 // START
 startButton.addEventListener('click', () => {
@@ -19,15 +25,6 @@ pauseButton.addEventListener('click', () => {
 stopButton.addEventListener('click', () => {
   toggleClock(true);
 })
-
-let isClockRunning = false;
-
-// in seconds = 25 mins
-let workSessionDuration = 1500;
-let currentTimeLeftInSession = 1500;
-
-// in seconds = 5 mins;
-let breakSessionDuration = 300;
 
 const toggleClock = (reset) => {
   if (reset) {
@@ -90,9 +87,15 @@ const stepDown = () => {
       currentTimeLeftInSession = breakSessionDuration
       displaySessionLog('Work')
       type = 'Break'
+      currentTaskLabel.value = 'Break';
+      currentTaskLabel.disabled = true;
     } else {
       currentTimeLeftInSession = workSessionDuration
       type = 'Work'
+      if (currentTaskLabel.value === 'Break') {
+      currentTaskLabel.value = workSessionLabel;
+      }
+      currentTaskLabel.disabled = false;
       displaySessionLog('Break')
     }
   }
@@ -103,7 +106,12 @@ const displaySessionLog = type => {
   const sessionsList = document.querySelector('#pomodoro-sessions')
   // append li to it
   const li = document.createElement('li')
-  let sessionLabel = type
+  if (type === 'Work') {
+  sessionLabel = currentTaskLabel.value ? currentTaskLabel.value : 'Work'
+  workSessionLabel = sessionLabel
+  } else {
+  sessionLabel = 'Break'
+  }
   let elapsedTime = parseInt(timeSpentInCurrentSession / 60)
   elapsedTime = elapsedTime > 0 ? elapsedTime : '< 1'
 
