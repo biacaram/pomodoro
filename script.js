@@ -48,18 +48,22 @@ const toggleClock = (reset) => {
     // STOP THE TIMER
     stopClock()
   } else {
+    if (isClockStopped) {
+      setUpdatedTimers()
+      isClockStopped = false
+    }
     if (isClockRunning === true) {
       // PAUSE THE TIMER
       clearInterval(clockTimer);
       isClockRunning = false;
     } else {
       // START THE TIMER
-      isClockRunning = true;
       clockTimer = setInterval(() => {
-      // decrease time left / increase time spent
-      stepDown();
-      displayCurrentTimeLeftInSession();
+        // decrease time left / increase time spent
+        stepDown();
+        displayCurrentTimeLeftInSession();
       }, 1000)
+      isClockRunning = true;
     }
   }
 }
@@ -80,16 +84,19 @@ const displayCurrentTimeLeftInSession = () => {
 }
 
 const stopClock = () => {
+  setUpdatedTimers()
   displaySessionLog(type)
   // 1) reset the timer we set
   clearInterval(clockTimer)
   // 2) update our variable to know that the timer is stopped
+  isClockStopped = true
   isClockRunning = false
   // reset the time left in the session to its original state
   currentTimeLeftInSession = workSessionDuration
   // update the timer displayed
   displayCurrentTimeLeftInSession()
   type = 'Work'
+  timeSpentInCurrentSession = 0
 }
 
 const stepDown = () => {
