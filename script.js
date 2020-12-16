@@ -30,6 +30,7 @@ let breakSessionDuration = 300;
 const toggleClock = (reset) => {
   if (reset) {
     // STOP THE TIMER
+    stopClock()
   } else {
     if (isClockRunning === true) {
       // PAUSE THE TIMER
@@ -60,4 +61,15 @@ const displayCurrentTimeLeftInSession = () => {
   if (hours > 0) result += `${hours}:`
   result += `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`
   pomodoroTimer.innerText = result.toString();
+}
+
+const stopClock = () => {
+  // 1) reset the timer we set
+  clearInterval(clockTimer)
+  // 2) update our variable to know that the timer is stopped
+  isClockRunning = false
+  // reset the time left in the session to its original state
+  currentTimeLeftInSession = workSessionDuration
+  // update the timer displayed
+  displayCurrentTimeLeftInSession()
 }
