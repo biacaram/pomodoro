@@ -2,7 +2,8 @@ const pomodoroTimer = document.querySelector('#pomodoro-timer');
 const startButton = document.getElementById('pomodoro-start');
 const pauseButton = document.getElementById('pomodoro-pause');
 const stopButton = document.getElementById('pomodoro-stop');
-let type = 'Work'
+let type = 'Work';
+let timeSpentInCurrentSession = 0;
 
 // START
 startButton.addEventListener('click', () => {
@@ -65,6 +66,7 @@ const displayCurrentTimeLeftInSession = () => {
 }
 
 const stopClock = () => {
+  displaySessionLog(type)
   // 1) reset the timer we set
   clearInterval(clockTimer)
   // 2) update our variable to know that the timer is stopped
@@ -73,14 +75,17 @@ const stopClock = () => {
   currentTimeLeftInSession = workSessionDuration
   // update the timer displayed
   displayCurrentTimeLeftInSession()
+  type = 'Work'
 }
 
 const stepDown = () => {
   if (currentTimeLeftInSession > 0) {
     // decrease time left / increase time spent
     currentTimeLeftInSession--
+    timeSpentInCurrentSession++
   } else if (currentTimeLeftInSession === 0) {
     // Timer is over -> if work switch to break, viceversa
+    timeSpentInCurrentSession = 0
     if (type === 'Work') {
       currentTimeLeftInSession = breakSessionDuration
       displaySessionLog('Work')
@@ -92,4 +97,17 @@ const stepDown = () => {
     }
   }
   displayCurrentTimeLeftInSession()
+}
+
+const displaySessionLog = type => {
+  const sessionsList = document.querySelector('#pomodoro-sessions')
+  // append li to it
+  const li = document.createElement('li')
+  let sessionLabel = type
+  let elapsedTime = parseInt(timeSpentInCurrentSession / 60)
+  elapsedTime = elapsedTime > 0 ? elapsedTime : '< 1'
+
+  const text = document.createTextNode(`${sessionLabel} : ${elapsedTime} min`)
+  li.appendChild(text)
+  sessionsList.appendChild(li)
 }
