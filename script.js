@@ -15,6 +15,14 @@ let isClockStopped = true;
 let workDurationInput = document.querySelector('#input-work-duration');
 let breakDurationInput = document.querySelector('#input-break-duration');
 
+const progressBar = new ProgressBar.Circle('#pomodoro-timer', {
+  strokeWidth: 2,
+  text: {
+    value: '25:00',
+  },
+  trailColor: '#f4f4f4',
+})
+
 workDurationInput.value = '25'
 breakDurationInput.value = '5'
 
@@ -162,10 +170,3 @@ const setUpdatedTimers = () => {
   }
 }
 
-const progressBar = new ProgressBar.Circle('#pomodoro-timer', {
-  strokeWidth: 2,
-  text: {
-    value: '25:00',
-  },
-  trailColor: '#f4f4f4',
-})
